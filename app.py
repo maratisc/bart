@@ -29,7 +29,7 @@ marge.children = [bart, lisa, maggie]
 # UI Components
 st.title("Simpsons Family Tree")
 
-selected_person = st.selectbox("Select a person", [homer, marge, bart, lisa, maggie])
+selected_person = st.selectbox("Select a person", [homer.name, marge.name, bart.name, lisa.name, maggie.name])
 # ... (display selected person's details)
 
 # Visualization using NetworkX
