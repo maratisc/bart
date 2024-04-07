@@ -3,11 +3,27 @@ import streamlit as st
 # Person Class (as before)
 class Person:
     def __init__(self, name, spouse=None, children=None):
-        # ... (rest of the class definition)
+        self.name = name
+        self.spouse = spouse
+        self.children = children or []
 
-# Family Data
+# Create family members
 homer = Person("Homer Simpson")
-# ... (create other family members and relationships)
+marge = Person("Marge Simpson")
+bart = Person("Bart Simpson")
+lisa = Person("Lisa Simpson")
+maggie = Person("Maggie Simpson")
+
+# Establish relationships
+homer.spouse = marge
+marge.spouse = homer
+homer.children = [bart, lisa, maggie]
+marge.children = [bart, lisa, maggie]
+
+# Print family tree (rudimentary representation)
+#print("Homer Simpson")
+#print("Spouse:", homer.spouse.name)
+#print("Children:", [child.name for child in homer.children])
 
 # UI Components
 st.title("Simpsons Family Tree")
