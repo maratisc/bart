@@ -48,7 +48,7 @@ def convert_to_json(name):
 family_data_json = convert_to_json(selected_person_name)
 
 # Display HTML with D3
-/*
+'''
 st.components.v1.html(
     f"""
     <div id="tree-container"></div>
@@ -57,7 +57,8 @@ st.components.v1.html(
     </script>
     """,
     height=600,
-)*/
+)
+'''
 
 # Read HTML file
 with open("tree.html", "r") as f:
