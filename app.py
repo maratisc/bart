@@ -48,6 +48,10 @@ def convert_to_json(name):
 family_data_json = convert_to_json(selected_person_name)
 print("family_data_json:", family_data_json)
 
+# Read HTML file
+with open("tree.html", "r") as f:
+    html_content = f.read()
+    
 # Embed JSON data in HTML
 html_content = html_content.replace(
     "", f"var familyData = {family_data_json};"
