@@ -1,6 +1,5 @@
 import streamlit as st
-import streamlit as st
-from streamlit_agraph import agraph, Node, Edge
+import networkx as nx
 
 # Person Class (as before)
 class Person:
@@ -30,28 +29,20 @@ marge.children = [bart, lisa, maggie]
 # UI Components
 st.title("Simpsons Family Tree")
 
-selected_person = st.selectbox("Select a person", [homer.name, marge.name, bart.name, lisa.name, maggie.name])
+selected_person = st.selectbox("Select a person", [homer, marge, bart, lisa, maggie])
 # ... (display selected person's details)
 
-# Visualization (Placeholder)
-nodes = []
-edges = []
+# Visualization using NetworkX
+def build_tree_nx(person):
+    G = nx.DiGraph()
+    def add_node_and_children(person, parent=None):
+        G.add_node(person.name)
+        if parent:
+            G.add_edge(parent.name, person.name)
+        for child in person.children:
+            add_node_and_children(child, person)
+    add_node_and_children(selected_person)
+    return G
 
-def build_tree(person, parent_id=None):
-    node_id = person.name
-    nodes.append(Node(id=node_id, label=person.name))
-    if parent_id:
-        edges.append(Edge(source=parent_id, target=node_id))
-    for child in person.children:
-        build_tree(child, node_id)
-
-build_tree(selected_person)
-
-config = {
-    "width": 800,
-    "height": 600,
-    "directed": True,
-    "nodeHighlightBehavior": True,
-}
-
-agraph(nodes=nodes, edges=edges, config=config)
+graph = build_tree_nx(selected_person)
+st.graphviz_chart(nx.nx_agraph.to_agraph(graph))
