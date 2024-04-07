@@ -57,3 +57,13 @@ st.components.v1.html(
     """,
     height=600,
 )
+
+# Read HTML file
+with open("tree.html", "r") as f:
+    html_content = f.read()
+
+# Display HTML with D3
+st.components.v1.html(
+    html_content,
+    height=600,
+)
