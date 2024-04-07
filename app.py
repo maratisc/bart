@@ -1,56 +1,36 @@
 import streamlit as st
-from pyvis.network import Network
+import json
 
-# Person Class (as before)
-class Person:
-    def __init__(self, name, spouse=None, children=None):
-        self.name = name
-        self.spouse = spouse
-        self.children = children or []
+# ... (Person class and family data as before)
 
-# Create family members
-homer = Person("Homer Simpson")
-marge = Person("Marge Simpson")
-bart = Person("Bart Simpson")
-lisa = Person("Lisa Simpson")
-maggie = Person("Maggie Simpson")
-
-# Establish relationships
-homer.spouse = marge
-marge.spouse = homer
-homer.children = [bart, lisa, maggie]
-marge.children = [bart, lisa, maggie]
-
-# Print family tree (rudimentary representation)
-#print("Homer Simpson")
-#print("Spouse:", homer.spouse.name)
-#print("Children:", [child.name for child in homer.children])
-
-# UI Components
 st.title("Simpsons Family Tree")
 
 selected_person_name = st.selectbox("Select a person", [homer.name, marge.name, bart.name, lisa.name, maggie.name])
 
-# Visualization using pyvis
-def build_tree_pyvis(name):
-    net = Network(notebook=True)
+# Convert family data to JSON
+def convert_to_json(name):
+    data = []
     def add_node_and_children(name, parent=None):
-        net.add_node(name)
+        node = {"name": name}
         if parent:
-            net.add_edge(parent, name)
+            node["parent"] = parent
+        data.append(node)
         person = next((p for p in [homer, marge, bart, lisa, maggie] if p.name == name), None)
         if person:
             for child in person.children:
                 add_node_and_children(child.name, name)
     add_node_and_children(selected_person_name)
-    return net
+    return json.dumps(data)
 
-net = build_tree_pyvis(selected_person_name)
-try:
-    path = '/tmp'
-    net.save_graph(f'{path}/pyvis_graph.html')
-    HtmlFile = open(f'{path}/pyvis_graph.html', 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    components.html(source_code, height = 900)
-except:
-    st.error("An error occurred while generating the network graph.")
+family_data_json = convert_to_json(selected_person_name)
+
+# Display HTML with D3
+st.components.v1.html(
+    f"""
+    <div id="tree-container"></div>
+    <script>
+        // D3 code using family_data_json will go here
+    </script>
+    """,
+    height=600,
+)
