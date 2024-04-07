@@ -46,6 +46,7 @@ def convert_to_json(name):
     return json.dumps(data)
 
 family_data_json = convert_to_json(selected_person_name)
+rint("family_data_json:", family_data_json)
 
 # Read HTML file
 with open("tree.html", "r") as f:
