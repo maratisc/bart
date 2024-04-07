@@ -1,4 +1,6 @@
 import streamlit as st
+import streamlit as st
+from streamlit_agraph import agraph, Node, Edge
 
 # Person Class (as before)
 class Person:
@@ -32,4 +34,24 @@ selected_person = st.selectbox("Select a person", [homer.name, marge.name, bart.
 # ... (display selected person's details)
 
 # Visualization (Placeholder)
-st.write("Visualization of family tree will appear here")
+nodes = []
+edges = []
+
+def build_tree(person, parent_id=None):
+    node_id = person.name
+    nodes.append(Node(id=node_id, label=person.name))
+    if parent_id:
+        edges.append(Edge(source=parent_id, target=node_id))
+    for child in person.children:
+        build_tree(child, node_id)
+
+build_tree(selected_person)
+
+config = {
+    "width": 800,
+    "height": 600,
+    "directed": True,
+    "nodeHighlightBehavior": True,
+}
+
+agraph(nodes=nodes, edges=edges, config=config)
