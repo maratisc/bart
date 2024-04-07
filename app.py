@@ -33,15 +33,17 @@ selected_person = st.selectbox("Select a person", [homer.name, marge.name, bart.
 # ... (display selected person's details)
 
 # Visualization using NetworkX
-def build_tree_nx(person):
+def build_tree_nx(selected_name):
     G = nx.DiGraph()
-    def add_node_and_children(person, parent=None):
-        G.add_node(person.name)
+    def add_node_and_children(name, parent=None):
+        G.add_node(name)
         if parent:
-            G.add_edge(parent.name, person.name)
-        for child in person.children:
-            add_node_and_children(child, person)
-    add_node_and_children(selected_person)
+            G.add_edge(parent, name)
+        person = next((p for p in [homer, marge, bart, lisa, maggie] if p.name == name), None)
+        if person:
+            for child in person.children:
+                add_node_and_children(child.name, name)
+    add_node_and_children(selected_name)
     return G
 
 graph = build_tree_nx(selected_person)
