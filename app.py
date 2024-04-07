@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_agraph import agraph, Node, Edge
+from pyvis.network import Network
 
 # Person Class (as before)
 class Person:
@@ -31,27 +31,26 @@ st.title("Simpsons Family Tree")
 
 selected_person_name = st.selectbox("Select a person", [homer.name, marge.name, bart.name, lisa.name, maggie.name])
 
-# Visualization using streamlit-agraph
-nodes = []
-edges = []
+# Visualization using pyvis
+def build_tree_pyvis(name):
+    net = Network(notebook=True)
+    def add_node_and_children(name, parent=None):
+        net.add_node(name)
+        if parent:
+            net.add_edge(parent, name)
+        person = next((p for p in [homer, marge, bart, lisa, maggie] if p.name == name), None)
+        if person:
+            for child in person.children:
+                add_node_and_children(child.name, name)
+    add_node_and_children(selected_person_name)
+    return net
 
-def build_tree(name, parent_id=None):
-    node_id = name
-    nodes.append(Node(id=node_id, label=name))
-    if parent_id:
-        edges.append(Edge(source=parent_id, target=node_id))
-    person = next((p for p in [homer, marge, bart, lisa, maggie] if p.name == name), None)
-    if person:
-        for child in person.children:
-            build_tree(child.name, node_id)
-
-build_tree(selected_person_name)
-
-config = {
-    "width": 800,
-    "height": 600,
-    "directed": True,
-    "nodeHighlightBehavior": True,
-}
-
-agraph(nodes=nodes, edges=edges, config=config)
+net = build_tree_pyvis(selected_person_name)
+try:
+    path = '/tmp'
+    net.save_graph(f'{path}/pyvis_graph.html')
+    HtmlFile = open(f'{path}/pyvis_graph.html', 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    components.html(source_code, height = 900)
+except:
+    st.error("An error occurred while generating the network graph.")
