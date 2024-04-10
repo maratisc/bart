@@ -28,7 +28,8 @@ marge.children = [bart, lisa, maggie]
 
 st.title("Simpsons Family Tree")
 
-selected_person_name = st.selectbox("Select a person", [homer.name, marge.name, bart.name, lisa.name, maggie.name])
+#selected_person_name = st.selectbox("Select a person", [homer.name, marge.name, bart.name, lisa.name, maggie.name])
+selected_person_name = homer.name
 
 # Convert family data to JSON
 def convert_to_json(name):
