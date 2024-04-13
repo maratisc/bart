@@ -26,7 +26,7 @@ marge.children = [bart, lisa, maggie]
 #print("Spouse:", homer.spouse.name)
 #print("Children:", [child.name for child in homer.children])
 
-st.title("Simpsons Family Tree")
+st.title("Simpson Family Tree")
 
 #selected_person_name = st.selectbox("Select a person", [homer.name, marge.name, bart.name, lisa.name, maggie.name])
 selected_person_name = homer.name
@@ -54,9 +54,7 @@ with open("tree.html", "r") as f:
     html_content = f.read()
     
 # Embed JSON data in HTML
-html_content = html_content.replace(
-    "", f"var familyData = {family_data_json};"
-)
+html_content = f"var familyData = {family_data_json};\n" + html_content
 
 # Display HTML with D3
 st.components.v1.html(
