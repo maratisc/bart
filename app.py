@@ -58,6 +58,5 @@ family_data_json = convert_to_json(selected_person_name)
 
 # Display HTML with D3
 st.components.v1.html(
-    <script>var familyData = {family_data_json};</script>
-    height=600,
+    '''<script>var familyData = {family_data_json};</script>'''
 )
