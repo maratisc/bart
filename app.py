@@ -50,14 +50,14 @@ family_data_json = convert_to_json(selected_person_name)
 #print("family_data_json:", family_data_json)
 
 # Read HTML file
-with open("tree.html", "r") as f:
-    html_content = f.read()
+#with open("tree.html", "r") as f:
+#    html_content = f.read()
     
 # Embed JSON data in HTML
-html_content = f"var familyData = {family_data_json};\n" + html_content
+#html_content = f"var familyData = {family_data_json};\n" + html_content
 
 # Display HTML with D3
 st.components.v1.html(
-    html_content,
+    <script>var familyData = {family_data_json};</script>
     height=600,
 )
