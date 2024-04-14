@@ -5,19 +5,16 @@
     <script src="https://d3js.org/d3.v7.min.js"></script> </head>
 <body>
     // forcegraph.js requires var familyData
+    var familyData;
     <div id="tree-container"/>
-    <script type = "text/javascript" src = "jquery-1.10.2.min.js"></script>
+    <script type = "text/javascript" src = "jquery-1.10.2.min.js">
         $.ajax({
           dataType: "json",
-          url: url,
-          data: familyData,-l.[
+          url: "familyData.json",
+          data: familyData,
           success: success
         });
-    <script type = "text/javascript">
-        $(document).ready(getAJAX);
-        function getAJAX(){
-            $("#tree-container").load("forcegraph.js");
-         }
-     </script>
+    </script>
+    <script type = "text/javascript" src="forcegraph.js" />
 </body>
 </html>
