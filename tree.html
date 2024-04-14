@@ -4,11 +4,20 @@
     <title>Family Tree</title>
     <script src="https://d3js.org/d3.v7.min.js"></script> </head>
 <body>
-    <div id="tree-container">
-        // D3 code
-        // requires var familyData
-        familyData = 
-        <script src="forcegraph.js">
-    </div>
+    // forcegraph.js requires var familyData
+    <div id="tree-container"/>
+    <script type = "text/javascript" src = "jquery-1.10.2.min.js"></script>
+        $.ajax({
+          dataType: "json",
+          url: url,
+          data: familyData,-l.[
+          success: success
+        });
+    <script type = "text/javascript">
+        $(document).ready(getAJAX);
+        function getAJAX(){
+            $("#tree-container").load("forcegraph.js");
+         }
+     </script>
 </body>
 </html>
