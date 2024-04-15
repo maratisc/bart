@@ -5,15 +5,21 @@
     <script src="https://d3js.org/d3.v7.min.js"></script> </head>
 <body>
     // forcegraph.js requires var familyData
-    var familyData;
     <div id="tree-container"/>
     <script type = "text/javascript" src = "jquery-1.10.2.min.js">
+        var familyData = (function () {
+        var json = null;
         $.ajax({
-          dataType: "json",
-          url: "familyData.json",
-          data: familyData,
-          success: success
-        });
+                'async': false,
+                'global': false,
+                'url': "familyData.json",
+                'dataType': "json",
+                'success': function (data) {
+                    json = data;
+                }
+            });
+            return json;
+        })(); 
     </script>
     <script type = "text/javascript" src="forcegraph.js" />
 </body>
